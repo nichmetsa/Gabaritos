@@ -95,7 +95,6 @@ class CantedBeam:
         else:
             raise Exception('Invalid section type')
 
-
 class MohrsCircle:
 
     def __init__(self,tensor):

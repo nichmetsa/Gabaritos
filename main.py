@@ -8,11 +8,13 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.popup import Popup
 
 from Gabaritos import MohrsCircle, UnitCell
+from InputManager import InputManager
 
 import numpy as np
 import re
 
 class TensorScreen(BoxLayout):
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -43,6 +45,7 @@ class TensorScreen(BoxLayout):
         self.add_widget(self.tau_zy)
         self.add_widget(checkboxlayout)
         self.add_widget(run)
+    
 
     def run_program(self,obj):
 
@@ -53,37 +56,25 @@ class TensorScreen(BoxLayout):
                        self.tau_zx.text,
                        self.tau_zy.text]
 
-        r = re.compile('\D+')
+        value = InputManager.input_filter(tensor_list)
 
-        value = False
-
-        for element in tensor_list:
-            if r.match(element):
-                value = True
-                
-        
         if value:
-            popup = Popup(title='Aviso!',
-                        content=Label(text='Inserir somente numeros'),
-                        size_hint=(None, None), size=(400, 400),
-                        background_color = 'yellow')
-            popup.open()
-
-        else:
+          
             tensor = [[float(self.sigma_x.text), float(self.tau_yx.text), float(self.tau_zx.text)],
                     [float(self.tau_yx.text), float(self.sigma_y.text), float(self.tau_zy.text)],
                     [float(self.tau_zx.text), float(self.tau_zy.text), float(self.sigma_z.text)]]
-
-            if self.mohrs.active:
-
-                circle = MohrsCircle(tensor)
-                circle.plot_data()
 
             if self.unitcell.active:
 
                 cell = UnitCell(tensor)
                 cell.show()
 
+            if self.mohrs.active:
+
+                circle = MohrsCircle(tensor)
+                circle.plot_data()
+
+            
 
 class GabaritosApp(App):
     pass
