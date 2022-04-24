@@ -127,10 +127,6 @@ class MohrsCircle:
 
         self.min_principal_stress = self.circle_centers - self.circle_radii
 
-    def show_data(self):
-
-        print('data')
-
     def plot_data(self):
         
         colors = ['c','m','y']
@@ -138,29 +134,27 @@ class MohrsCircle:
         radians = np.linspace(0, 2*pi, 721)
 
         plt.figure(figsize=[5,5])
-        plt.title('Mohrs Circle', fontsize = 18)
-        plt.ylabel(r'$\tau$', fontsize = 14)
-        plt.xlabel(r'$\sigma$', fontsize = 14)
         plt.axhline(color = 'k')
         plt.axvline(color = 'k')
+        ax = plt.axes()
+        ax.set_facecolor("grey")
 
         for i in range(0,3):
 
             sigma_points = self.circle_centers[i]+self.circle_radii[i]*np.cos(radians)
             tao_points = self.circle_radii[i]*np.sin(radians)
             
-            'Figure size and lines'
-            plt.plot(sigma_points, tao_points, label = "Mohrs' Circle", color = colors[i])
+            plt.plot(sigma_points, tao_points, color = colors[i])
             plt.fill_between(sigma_points, tao_points, color = colors[i], alpha = 0.1)
             plt.plot([self.circle_centers[i]],[0], marker = 'o', color = colors[i])
+            
 
         plt.grid()
-        'Fits everything in one window'
         plt.tight_layout()
-        'Show Plot'
-        plt.title('Mohrs Circle', fontsize = 18)
-        plt.ylabel(r'$\tau$', fontsize = 14)
-        plt.xlabel(r'$\sigma$', fontsize = 14)
+
+        plt.title('Mohrs Circle', fontsize = 20)
+        plt.ylabel(r'$\tau$', fontsize = 16)
+        plt.xlabel(r'$\sigma$', fontsize = 16)
         plt.show()
 
 class UnitCell:
