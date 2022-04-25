@@ -6,7 +6,7 @@ class PopUpManager():
     def insert_numbers_only():
 
         popup = Popup(title = 'Warning!',
-                        content = Label(text='Insert only numbers!'),
+                        content = Label(text='Insert numbers only!'),
                         size_hint = (None, None), size=(400, 400),
                         background_color = 'yellow')
         popup.open()
